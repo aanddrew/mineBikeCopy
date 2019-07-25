@@ -97,6 +97,7 @@ public class CustomFishHook extends EntityFishHook
     private int tickFail = 0;
     
     //The number of times they click, used to increase the power level
+    //HERE FOR DEBUGGING
 	private double clickRate = 0;
 	
 	//Checks to see if the Power Level GUI has reached maximum height
@@ -260,6 +261,7 @@ public class CustomFishHook extends EntityFishHook
     	if(beginPull == true)
     	{
     		tickCount++;
+    		//ClickRate here for debugging
     		clickRate -= .6;
 //    		clickRate += .4;
     		clickRate = Math.max(0, clickRate);
@@ -316,7 +318,7 @@ public class CustomFishHook extends EntityFishHook
     		//Changes the power bar's color and adjusts its height
     		if(checkHeight > -210)
     		{
-    			powerLvl.h = getHeight();
+    			powerLvl.h = checkHeight;
     			powerLvl.color = color(powerLvl.h);
     		}
     		//If the max height is reacher, make sure the height and color remains the same
@@ -338,9 +340,9 @@ public class CustomFishHook extends EntityFishHook
     		/*Once player has achieved required power level for specified tickSuccess, GUI gets unregistered
     		 * and hook is retracted
     		 */
-    		if(clickRate >= getRequiredPower()) //30 52.5
+    		if(checkHeight >= getRequiredPower()) //30 52.5
     		{
-    			if(clickRate >= getBonus())
+    			if(checkHeight >= getBonus())
     				doubleTime = 2;
     			else
     				doubleTime = 1;
@@ -873,35 +875,27 @@ public class CustomFishHook extends EntityFishHook
     	switch(difficulty)
     	{
     		case 4:
-    			return 15; //15
+    			return 50; //15
     		case 7:
-    			return 21; //21
+    			return 60; //21
     		case 6:
-    			return 30; //30
+    			return 70; //30
     		case 3:
-    			return 35; //35
+    			return 80; //35
     		default:
-    			return 21; //21
+    			return 60; //21
     	}
+    }
+    
+    private int getPower()
+    {
+    	return (BiGXPacketHandler.change * 4);
     }
     
     //Returns the how much the height of the power bar is incrementing based on the tier of fish
     private int getHeight()
     {
-    	//4 7 6 3
-    	switch(difficulty)
-    	{
-    		case 4:
-    			return (int)-(clickRate * 14);
-    		case 7:
-    			return (int)-(clickRate * 10);
-    		case 6:
-    			return (int)-(clickRate * 7);
-    		case 3:
-    			return (int)-(clickRate * 5);
-    		default:
-    			return (int)-(clickRate * 10); 
-    	}
+    	return (int) (-210 * ((double)(getPower()) / (double) getRequiredPower()));
     }
     
     //Returns how much extra speed the player must achieve before catching goes twice as fast
@@ -911,15 +905,15 @@ public class CustomFishHook extends EntityFishHook
     	switch(difficulty)
     	{
 	    	case 4:
-				return 25;
+				return 60;
 			case 7:
-				return 30;
+				return 70;
 			case 6:
-				return 35;
+				return 80;
 			case 3:
-				return 40;
+				return 90;
 			default:
-				return 30;
+				return 70;
     	}
     }
     
