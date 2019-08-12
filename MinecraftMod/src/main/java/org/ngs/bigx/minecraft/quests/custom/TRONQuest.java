@@ -493,7 +493,6 @@ public class TRONQuest extends CustomQuestAbstract
 		npcPathList.set(0, npcPath);
 		npcPathList.set(1, npcPath);
 		npc.ai.setMovingPath(npcPathList);
-//      command.addPathPoint(intPoint);
 		npc.ai.getMovingPath().add(npcPath);
 		command.enableMoving(true);
 		npc.velocityChanged = true;
